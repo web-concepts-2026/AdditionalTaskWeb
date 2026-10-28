@@ -1,0 +1,40 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>Socket HTTP Server</title>
+    <link rel="stylesheet" href="/style.css">
+</head>
+<body>
+    <main>
+        <h1>Socket server</h1>
+
+        <h2>GET with query parameters</h2>
+        <p><a href="/page?id=5">/page?id=5</a> &middot; <a href="/page?id=42&amp;lang=en">/page?id=42&amp;lang=en</a></p>
+
+        <h2>Parsed headers</h2>
+        <p><a href="/headers">/headers</a></p>
+
+        <h2>POST JSON</h2>
+        <textarea id="payload" rows="4">{"name": "Marat", "course": "Web Concepts"}</textarea>
+        <button id="send">POST to /api/echo</button>
+        <pre id="result"></pre>
+    </main>
+
+    <script>
+        document.getElementById("send").addEventListener("click", async () => {
+        const out = document.getElementById("result");
+        try {
+        const res = await fetch("/api/echo", {
+        method: "POST",
+        headers: {"Content-Type": "application/json"},
+        body: document.getElementById("payload").value,
+        });
+        out.textContent = res.status + "\n" + await res.text();
+        } catch (e) {
+        out.textContent = "Error: " + e;
+        }
+        });
+    </script>
+</body>
+</html>`
